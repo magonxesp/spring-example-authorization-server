@@ -1,0 +1,9 @@
+1715261926190:help
+1715261930592:user
+1715261940030:user create
+1715261956979:user create -h
+1715261980504:user create --email=juanma.alvarez@basetis.com --password=1234
+1715262228800:user help
+1715262236021:user --help
+1715262239267:help
+1715262253842:user create juanma.alvarez@basetis.com 1234

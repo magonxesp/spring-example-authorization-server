@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: authorizer
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3357/authorization
+    username: authorization
+    password: authorization
+  data:
+    jpa:
+      repositories:
+        enabled: on
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDBDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: on
+  security:
+    oauth2:
+      authorizationserver:
+        issuer: http://localhost:8080
+        endpoint:
+          authorization-uri: /authorize
+          jwk-set-uri: /.well-known/jwks.json
+          token-uri: /oauth/token
+          device-authorization-uri: /oauth/device-authorization
+          device-verification-uri: /oauth/device-verification
+          token-introspection-uri: /oauth/introspect
+          token-revocation-uri: /oauth/revoke
+          oidc:
+            user-info-uri: /userinfo
+            logout-uri: /logout
+            client-registration-uri: /register
+        client:
+          oidc-client:
+            registration:
+              client-id: "oidc-client"
+              client-secret: "{noop}secret"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+              redirect-uris:
+                - "http://localhost:8080/login/oauth2/code/oidc-client"
+                - "https://oauthdebugger.com/debug"
+              post-logout-redirect-uris:
+                - "http://localhost:8080/login"
+              scopes:
+                - "openid"
+                - "profile"
+            require-authorization-consent: true
